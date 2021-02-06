@@ -1,5 +1,3 @@
-const { Products } = require(".");
-
 module.exports = (sequelize, Sequelize) => {
     const Member = sequelize.define("member", {})
     const Product = sequelize.define("product", {})

@@ -21,6 +21,8 @@ app.use(bodyPasrer.urlencoded({ extended: true }));
 
 const db = require("./app/models");
 const Role = db.Roles;
+// const Member = db.Members;
+
 db.sequelize.sync();
 // db.sequelize.sync({ force: true }).then(() => {
 //     console.log("Drop and re-sync db.");
@@ -46,9 +48,10 @@ function initial(){
 //     res.json({ message: "Welcome to N-1996 application." });
 // });
 
-require("./app/routes/product.routes")(app);
-require("./app/routes/member.routes")(app);
-require("./app/routes/order.routes")(app);
+require('./app/routes/auth.routes')(app);
+require('./app/routes/member.routes')(app);
+// require("./app/routes/product.routes")(app);
+// require("./app/routes/order.routes")(app);
 
 
 

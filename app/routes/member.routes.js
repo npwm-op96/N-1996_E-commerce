@@ -1,21 +1,22 @@
-module.exports = app => {
-    const member = require("../controllers/member.controller.js");
-    var router = require("express").Router();
+const {authJwt}=require("../middleware");
+const controller = require("../controllers/member.controller");
 
-
-    router.post("/", member.create);
-
-    router.get("/", member.findAll);
-
-    router.get('/status', member.findAllPublished);
-
-    router.get('/:id', member.findOne);
-
-    router.put('/:id', member.update)
-
-    router.delete('/:id', member.delete);
-
-    router.delete('/', member.deleteAll);
-
-    app.use('/api/member', router);
+module.exports = function(app){
+    app.use(function(req,res,next){
+        res.header(
+            "Access-Control-Allow-Headers",
+            "x-access-token,Origin,Content-Type,Accept"
+        );
+        next();
+    });
+    app.get("/api/test/all",controller.allAccess);
+    app.get(
+        "/api/test/member",
+        [authJwt.verifyToken],
+        controller.memberBoard
+    );
+    app.get("/api/tes/mod",
+    [authJwt.verifyToken,authJwt.isAdmin],
+    controller.adminBoard
+    );
 };
