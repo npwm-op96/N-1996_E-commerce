@@ -11,13 +11,36 @@ app.use(cors(corsOptions));
 
 app.use(bodyPasrer.json());
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
+    res.header('Access-Control-Allow-Methods','POST, GET, PUT, PATCH, DELETE, OPTIONS')
+    next()
+  })
+
 app.use(bodyPasrer.urlencoded({ extended: true }));
 
 const db = require("./app/models");
-// db.sequelize.sync();
+const Role = db.Roles;
+db.sequelize.sync();
 // db.sequelize.sync({ force: true }).then(() => {
 //     console.log("Drop and re-sync db.");
+//     initial();
 // });
+
+function initial(){
+    Role.create({
+        id:1,
+        name:"user"
+    });
+    Role.create({
+        id:2,
+        name:"moderator"
+    });
+    Role.create({
+        id:3,
+        name:"admin"
+    });
+}
 
 // app.get("/", (req, res) => {
 //     res.json({ message: "Welcome to N-1996 application." });

@@ -20,6 +20,19 @@ db.sequelize = sequelize;
 db.Products = require("./product.model.js")(sequelize, Sequelize);
 db.Members = require("./member.model.js")(sequelize, Sequelize);
 db.Orders = require("./order.model.js")(sequelize, Sequelize);
+db.Roles = require("../models/role.model.js")(sequelize,Sequelize);
 
+db.Roles.belongsToMany(db.Members,{
+    through:"member_roles",
+    foreignKey:"roleId",
+    otherKey:"memberId"
+});
+db.Members.belongsToMany(db.Roles,{
+    through:"member_roles",
+    foreignKey:"memberId",
+    otherKey:"roleId"
+});
+
+db.ROLES = ["user","admin","moderator"];
 
 module.exports = db;
