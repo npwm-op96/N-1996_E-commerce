@@ -11,13 +11,13 @@ module.exports = (sequelize, Sequelize) => {
         },
     });
     // Member.hasMany(Order, { as: "order" });
-    Order.belongsTo(Product, {
-        foreignKey: "id_pro",
-        as: "product",
-      });
-    Order.belongsTo(Member, {
-        foreignKey: "id_member",
-        as: "member",
-      });
+    // Order.belongsTo(Product, {
+    //     foreignKey: "id_pro",
+    //     as: "product",
+    //   });
+    // Order.belongsTo(Member, {
+    //     foreignKey: "id_member",
+    //     as: "member",
+    //   });
     return Order;
 };

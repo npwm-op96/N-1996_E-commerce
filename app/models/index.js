@@ -17,9 +17,9 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 const db = {}
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-db.Products = require("./product.model.js")(sequelize, Sequelize);
 db.Members = require("./member.model.js")(sequelize, Sequelize);
-db.Orders = require("./order.model.js")(sequelize, Sequelize);
+db.Products = require("./product.model.js")(sequelize, Sequelize);
+// db.Orders = require("./order.model.js")(sequelize, Sequelize);
 db.Roles = require("../models/role.model.js")(sequelize,Sequelize);
 
 db.Roles.belongsToMany(db.Members,{

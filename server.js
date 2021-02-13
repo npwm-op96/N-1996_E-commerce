@@ -5,14 +5,15 @@ const cors = require("cors");
 const app = express();
 
 var corsOptions = {
-    origin: "http://localhost:8081"
+    origin: "http://127.0.0.1:8080"
 };
+app.options('*', cors()) // include before other routes
 app.use(cors(corsOptions));
 
 app.use(bodyPasrer.json());
 
 app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
+    res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:8080')
     res.header('Access-Control-Allow-Methods','POST, GET, PUT, PATCH, DELETE, OPTIONS')
     next()
   })
@@ -20,6 +21,8 @@ app.use((req, res, next) => {
 app.use(bodyPasrer.urlencoded({ extended: true }));
 
 const db = require("./app/models");
+// db.sequelize.sync();
+
 const Role = db.Roles;
 // const Member = db.Members;
 
@@ -50,12 +53,12 @@ function initial(){
 
 require('./app/routes/auth.routes')(app);
 require('./app/routes/member.routes')(app);
-// require("./app/routes/product.routes")(app);
+require("./app/routes/product.routes")(app);
 // require("./app/routes/order.routes")(app);
 
 
 
 const PORT = process.env.PORT || 8400;
 app.listen(PORT, () => {
-    console.log('Server is running on port ${PORT}.');
+    console.log(`Server is running on port ${PORT}.`);
 });
