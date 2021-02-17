@@ -1,56 +1,55 @@
+const { sequelize } = require("../models");
 const db = require("../models");
 const Order = db.Orders;
+const Order_detail = db.Order_details;
 const Product = db.Products;
 const Member = db.Members;
 
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
-
+    var sum_product=[];
     if (!req.body.id_member) {
         res.status(400).send({
-            message: "(Content can not be empty)"
+            message: "(Content can not be id)"
         });
         return;
     }
-    // var pro_obj = []
-
     const order = {
         id_member: req.body.id_member,
-        id_pro: req.body.id_pro,
-        qty: req.body.qty,
     };
-    var id_pro = req.body.id_pro
-    var qty_order = req.body.qty
-    const pro_obj = Product.findAll({
-            where: {
-                id: {
-                    [Op.eq]: id_pro
-                }
-            },
-            attributes: ['qty']
+
+    const order_detail = req.body.order
+    Order.create(order)
+        .then(data => {
+            id_order = data.dataValues.id
+            order_detail.forEach(product => 
+                {
+                    Product.findAll({
+                        attributes: ['qty'],
+                        where: {id:product.id}
+                      })
+                      .then(function(data) {
+                        const order = {
+                            id_order: id_order,
+                            product: product.name,
+                            price: product.price
+                        };
+                        Order_detail.create(order)
+                        sum_product=data[0].dataValues.qty
+                        console.log(sum_product)
+                        Product.update({qty:sum_product-product.qty}, {
+                            where: { id: product.id }
+                        })
+                    })
+                      })
+                      res.send(data)                
         })
-        // .then(data => {
-    res.send(pro_obj);
-    // var sum = data[0].qty - qty_order
-
-    // Product.update({ qty: sum }, {
-    //     where: { id: id_pro }
-    // })
-    // Order.create(order)
-    //     .then(data => {
-    //         res.send(data);
-    //     })
-    //     .catch(err => {
-    //         res.status(500).send({
-    //             message: err.message || "Some error occurred while creating the product "
-    //         });
-    //     });
-
-    // })
-    // res.send(product_sum);
-
-
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while creating the product "
+            });
+        });
 };
 
 exports.findAll = (req, res) => {
@@ -73,16 +72,10 @@ exports.findAll = (req, res) => {
             });
         });
 };
-
-// exports.findAll = (req, res) => {
-//     const id 
-
-// };
-
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Order.findByPk(id, { include: ["member"] })
+    Order.findByPk(id)
         .then(data => {
             res.send(data);
         })

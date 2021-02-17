@@ -6,6 +6,9 @@ module.exports = (sequelize, Sequelize) => {
         id_cat: {
             type: Sequelize.INTEGER
         },
+        price:{
+            type:Sequelize.DOUBLE
+        },
         qty: {
             type: Sequelize.INTEGER
         },

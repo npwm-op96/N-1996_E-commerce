@@ -4,9 +4,9 @@ module.exports = (sequelize, Sequelize) => {
         id_member: {
             type: Sequelize.INTEGER
         },
-        id_pro: {
-            type: Sequelize.INTEGER
-        },
+        // id_pro: {
+        //     type: Sequelize.INTEGER
+        // },
     });
 
     return Order;
