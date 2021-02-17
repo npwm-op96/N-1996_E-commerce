@@ -18,6 +18,8 @@ app.use((req, res, next) => {
     next()
   })
 
+  
+
 app.use(bodyPasrer.urlencoded({ extended: true }));
 
 const db = require("./app/models");
@@ -54,7 +56,7 @@ function initial(){
 require('./app/routes/auth.routes')(app);
 require('./app/routes/member.routes')(app);
 require("./app/routes/product.routes")(app);
-// require("./app/routes/order.routes")(app);
+require("./app/routes/order.routes")(app);
 
 
 

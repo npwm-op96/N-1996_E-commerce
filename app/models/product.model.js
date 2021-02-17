@@ -1,6 +1,4 @@
 module.exports = (sequelize, Sequelize) => {
-    const Order = sequelize.define("order", {})
-
     const Product = sequelize.define("product", {
         name: {
             type: Sequelize.STRING
@@ -12,9 +10,5 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER
         },
     });
-    // Products.belongsTo(Order, {
-    //     foreignKey: "id_member",
-    //     as: "member",
-    //   });
     return Product;
 };

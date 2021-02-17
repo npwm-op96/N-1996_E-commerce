@@ -19,7 +19,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.Members = require("./member.model.js")(sequelize, Sequelize);
 db.Products = require("./product.model.js")(sequelize, Sequelize);
-// db.Orders = require("./order.model.js")(sequelize, Sequelize);
+db.Orders = require("./order.model.js")(sequelize, Sequelize);
 db.Roles = require("../models/role.model.js")(sequelize,Sequelize);
 
 db.Roles.belongsToMany(db.Members,{
