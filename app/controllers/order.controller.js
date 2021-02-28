@@ -8,18 +8,19 @@ const Member = db.Members;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
-    var sum_product=[];
-    if (!req.body.id_member) {
-        res.status(400).send({
-            message: "(Content can not be id)"
-        });
-        return;
-    }
+    // var sum_product=[];
+    // if (!req.body.id_member) {
+    //     res.status(400).send({
+    //         message: "(Content can not be id)"
+    //     });
+    //     return;
+    // }
     const order = {
         id_member: req.body.id_member,
     };
 
     const order_detail = req.body.order
+    console.log(order_detail)
     Order.create(order)
         .then(data => {
             id_order = data.dataValues.id
@@ -29,7 +30,7 @@ exports.create = (req, res) => {
                         attributes: ['qty'],
                         where: {id:product.id}
                       })
-                      .then(function(data) {
+                      .then(data=> {
                         const order = {
                             id_order: id_order,
                             product: product.name,
@@ -38,7 +39,7 @@ exports.create = (req, res) => {
                         Order_detail.create(order)
                         sum_product=data[0].dataValues.qty
                         console.log(sum_product)
-                        Product.update({qty:sum_product-product.qty}, {
+                        Product.update({qty:sum_product-1}, {
                             where: { id: product.id }
                         })
                     })

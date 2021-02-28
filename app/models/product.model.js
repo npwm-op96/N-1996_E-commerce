@@ -12,6 +12,9 @@ module.exports = (sequelize, Sequelize) => {
         qty: {
             type: Sequelize.INTEGER
         },
+        // Photo: {
+            // type: Sequelize.BLOB
+        // },
     });
     return Product;
 };
