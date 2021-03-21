@@ -15,8 +15,13 @@ exports.create = (req, res) => {
     //     });
     //     return;
     // }
+    var dateTime = require('node-datetime');
+    var dt = dateTime.create();
+    dt.format('y/m/d H:M:S');
     const order = {
         id_member: req.body.id_member,
+        total:req.body.total,
+        date_buy:dt.now
     };
 
     const order_detail = req.body.order
@@ -62,7 +67,11 @@ exports.findAll = (req, res) => {
     // } : null;
     // ["member"]},{include:["product"]
     // product
-    Order.findAll({ include:['product','member']})
+    Order.findAll({
+        include:Member
+    })
+
+    // Order.findAll({ include:['product','member']})
     // Order.findAll({ where: condition })
         .then(data => {
             res.send(data);
@@ -73,7 +82,24 @@ exports.findAll = (req, res) => {
             });
         });
 };
+exports.Order_detail = (req, res) => {
+    // console.log(res)
+    const id = req.params.id;
+
+    Order_detail.findAll({
+        where:{id_order:id}
+    })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error retriving Order"
+            });
+        });
+};
 exports.findOne = (req, res) => {
+    // console.log(res)
     const id = req.params.id;
 
     Order.findByPk(id)

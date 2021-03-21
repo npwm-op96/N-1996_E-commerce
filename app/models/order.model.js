@@ -4,9 +4,12 @@ module.exports = (sequelize, Sequelize) => {
         id_member: {
             type: Sequelize.INTEGER
         },
-        // id_pro: {
-        //     type: Sequelize.INTEGER
-        // },
+        total: {
+            type: Sequelize.DECIMAL
+        },
+        date_buy:{
+            type : Sequelize.DATE
+        }
     });
 
     return Order;

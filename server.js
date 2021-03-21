@@ -17,9 +17,6 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Methods','POST, GET, PUT, PATCH, DELETE, OPTIONS')
     next()
   })
-
-  
-
 app.use(bodyPasrer.urlencoded({ extended: true }));
 
 const db = require("./app/models");
@@ -28,7 +25,10 @@ const db = require("./app/models");
 const Role = db.Roles;
 // const Member = db.Members;
 
-db.sequelize.sync();
+// db.sequelize.sync();
+db.sequelize.sync({ force: true })
+
+
 // db.sequelize.sync({ force: true }).then(() => {
 //     console.log("Drop and re-sync db.");
 //     initial();
@@ -39,10 +39,7 @@ function initial(){
         id:1,
         name:"user"
     });
-    Role.create({
-        id:2,
-        name:"moderator"
-    });
+
     Role.create({
         id:3,
         name:"admin"

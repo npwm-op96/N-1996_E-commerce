@@ -34,6 +34,9 @@ db.Members.belongsToMany(db.Roles,{
     foreignKey:"memberId",
     otherKey:"roleId"
 });
+db.Orders.belongsTo(db.Members, {foreignKey: 'id_member', targetKey: 'id'}); 
+
+
 
 db.ROLES = ["user","admin","moderator"];
 
