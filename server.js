@@ -10,7 +10,11 @@ var corsOptions = {
 app.options('*', cors()) // include before other routes
 app.use(cors(corsOptions));
 
-app.use(bodyPasrer.json());
+// app.use(bodyPasrer.json());
+app.use(bodyPasrer.json({limit: '2000mb'}));
+app.use(bodyPasrer.urlencoded({limit: '2000mb', extended: true}));
+// app.use(express.json({limit: '50mb'}));
+
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
@@ -25,8 +29,8 @@ const db = require("./app/models");
 const Role = db.Roles;
 // const Member = db.Members;
 
-// db.sequelize.sync();
-db.sequelize.sync({ force: true })
+db.sequelize.sync();
+// db.sequelize.sync({ force: true })
 
 
 // db.sequelize.sync({ force: true }).then(() => {

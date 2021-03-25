@@ -58,6 +58,7 @@ exports.create = (req, res) => {
         });
 };
 
+
 exports.findAll = (req, res) => {
     const id_member = req.query.id_member;
     // var condition = name ? {

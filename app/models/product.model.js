@@ -3,21 +3,19 @@ module.exports = (sequelize, Sequelize) => {
         name: {
             type: Sequelize.STRING
         },
-        id_cat: {
-            type: Sequelize.INTEGER
-        },
         price:{
             type:Sequelize.DOUBLE
         },
         qty: {
             type: Sequelize.INTEGER
         },
+        type:{
+            type: Sequelize.INTEGER
+        },
         img: {
             type: Sequelize.JSON
         },
-        type:{
-            type: Sequelize.STRING
-        }
+     
     });
     return Product;
 };

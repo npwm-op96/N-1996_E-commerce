@@ -22,7 +22,7 @@ db.Products = require("./product.model.js")(sequelize, Sequelize);
 db.Orders = require("./order.model.js")(sequelize, Sequelize);
 db.Roles = require("../models/role.model.js")(sequelize,Sequelize);
 db.Order_details = require("../models/order_detail.model")(sequelize,Sequelize);
-
+db.Type_product = require("../models/type_product.model")(sequelize,Sequelize);
 
 db.Roles.belongsToMany(db.Members,{
     through:"member_roles",
@@ -34,8 +34,8 @@ db.Members.belongsToMany(db.Roles,{
     foreignKey:"memberId",
     otherKey:"roleId"
 });
-db.Orders.belongsTo(db.Members, {foreignKey: 'id_member', targetKey: 'id'}); 
-
+db.Orders.belongsTo(db.Members, {foreignKey: 'id_member', targetKey: 'id'});
+db.Products.belongsTo(db.Type_product, {foreignKey: 'type', targetKey: 'id'}); 
 
 
 db.ROLES = ["user","admin","moderator"];

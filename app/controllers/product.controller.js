@@ -1,26 +1,23 @@
 const db = require("../models");
 const Product = db.Products;
+const Type_product = db.Type_product;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
-
-    if (!req.body.name) {
-        res.status(400).send({
-            message: "(Content can not be empty)"
-        });
-        return;
-    }
-
+    var addproduct = req.body.addproduct
+   var img = addproduct.img[0].src
     const product = {
-        name: req.body.name,
-        qty: req.body.qty,
-        id_cat: req.body.id_cat,
-        price:req.body.price
+        name: addproduct.name,
+        qty: addproduct.qty,
+        type: addproduct.type,
+        price:addproduct.price,
+        img:img
     };
 
     Product.create(product)
         .then(data => {
             res.send(data);
+
         })
         .catch(err => {
             res.status(500).send({
@@ -28,6 +25,12 @@ exports.create = (req, res) => {
             });
         });
 };
+exports.gettype = (req ,res)=>{
+    Type_product.findAll()
+    .then(data=>{
+        res.send(data)
+    })
+}
 
 exports.findAll = (req, res) => {
     const name = req.query.name;
@@ -129,7 +132,7 @@ exports.deleteAll = (req, res) => {
         });
 };
 exports.findAllproduct = (req, res) => {
-    Product.findAll({ where: { id_cat: true } })
+    Product.findAll()
         .then(data => {
             res.send(data);
         })
