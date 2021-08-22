@@ -1,7 +1,12 @@
 module.exports = (sequelize, Sequelize) => {
     const Order = sequelize.define("order", {
-        
-        id_member: {
+        id_order:{
+            type:Sequelize.INTEGER,
+            primaryKey:true,
+            autoIncrement: true,
+  
+        },
+        id_user: {
             type: Sequelize.INTEGER
         },
         total: {
@@ -11,6 +16,5 @@ module.exports = (sequelize, Sequelize) => {
             type : Sequelize.DATE
         }
     });
-
     return Order;
 };

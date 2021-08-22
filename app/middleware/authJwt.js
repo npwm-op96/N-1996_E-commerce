@@ -13,32 +13,32 @@ verifyToken = (req,res, next)=>{
         });
     }
     jwt.verify(token,config.secret,(err,decoded)=>{
+        console.log(decoded)
         if(err){
             return res.status(401).send({
                 message:"Unauthorized!"
             });
         }
-        req.memberId = decoded.memberId
+        req.id_user = decoded.id_user
         next();
     });
 };
 
-isAdmin=(req,res,next)=>{
-    Member.findByPk(req.memberId).then(member=>{
-        member.getRoles().then(roles=>{
-            for(let i =0; i<roles.length; i ++){
-                if(role[i].name==="admin"){
-                    next();
-                    return;
-                }
-            }
-            res.status(403).send({
-                message:"Require Admin Role !"
-            });
+isAdmin = (req, res, next) => {
+    User.findByPk(req.id_user).then(user => {
+        console.log(user)
+        Role.findByPk(user.id_role).then(roles => {
+          if (roles.name === "admin") {
+            next();
             return;
-        })
+          }
+        res.status(403).send({
+          message: "Require Admin Role!"
+        });
+        return;
+      });
     });
-};
+  };
 const authJwt ={
     verifyToken:verifyToken,
     isAdmin:isAdmin

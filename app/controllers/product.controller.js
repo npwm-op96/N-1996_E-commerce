@@ -5,13 +5,15 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
     var addproduct = req.body.addproduct
-   var img = addproduct.img[0].src
+//    var img = addproduct.img[0].src
+//    var img = addproduct.img
+
     const product = {
         name: addproduct.name,
         qty: addproduct.qty,
         type: addproduct.type,
         price:addproduct.price,
-        img:img
+        // img:img
     };
 
     Product.create(product)

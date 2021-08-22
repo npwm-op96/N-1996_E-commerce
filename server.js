@@ -38,21 +38,26 @@ db.sequelize.sync();
 //     initial();
 // });
 
-function initial(){
+function initial() {
     Role.create({
-        id:1,
-        name:"user"
+      id_user: 1,
+      name: "user"
     });
-
+   
     Role.create({
-        id:3,
-        name:"admin"
+      id_user: 2,
+      name: "visitor"
+    });
+   
+    Role.create({
+      id_user: 3,
+      name: "admin"
     });
 }
 
-// app.get("/", (req, res) => {
-//     res.json({ message: "Welcome to N-1996 application." });
-// });
+app.get("/", (req, res) => {
+    res.json({ message: "Welcome to N-1996 application." });
+});
 
 require('./app/routes/auth.routes')(app);
 require('./app/routes/member.routes')(app);
