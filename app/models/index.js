@@ -21,23 +21,16 @@ db.Members = require("./member.model.js")(sequelize, Sequelize);
 db.Products = require("./product.model.js")(sequelize, Sequelize);
 db.Orders = require("./order.model.js")(sequelize, Sequelize);
 db.Roles = require("../models/role.model.js")(sequelize,Sequelize);
+db.Profile = require("../models/profile.model.js")(sequelize,Sequelize);
 db.Order_details = require("../models/order_detail.model")(sequelize,Sequelize);
-db.Type_product = require("../models/type_product.model")(sequelize,Sequelize);
 
-db.Roles.belongsToMany(db.Members,{
-    through:"member_roles",
-    foreignKey:"roleId",
-    otherKey:"memberId"
-});
-db.Members.belongsToMany(db.Roles,{
-    through:"member_roles",
-    foreignKey:"memberId",
-    otherKey:"roleId"
-});
-db.Orders.belongsTo(db.Members, {foreignKey: 'id_member', targetKey: 'id'});
-db.Products.belongsTo(db.Type_product, {foreignKey: 'type', targetKey: 'id'}); 
+//set order and detail 
+// db.Order_details.hasMany(db.Orders, {foreignKey: 'id_order', targetKey: 'id_order'}); 
+db.Orders.hasMany(db.Order_details, {foreignKey: 'id_order', targetKey: 'id_order'}); 
+//end
 
+// db.Products.hasMany(db.Order_details, {foreignKey: 'id_product', targetKey: 'id_product'}); 
+db.Order_details.belongsTo(db.Products, {foreignKey: 'id_product', targetKey: 'id_product'}); 
 
-db.ROLES = ["user","admin","moderator"];
 
 module.exports = db;
